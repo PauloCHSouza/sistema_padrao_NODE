@@ -1,0 +1,48 @@
+</div>
+<!-- /ConteudoCentral -->
+<footer>
+    <%- include('rodapeTexto.ejs') %>
+</footer>
+</div>
+<!-- /conteudoEspaco -->
+</section>
+<!-- /conteudoPrincipal -->
+</section>
+<!-- /conteudo -->
+
+<% if (global.BootstrapModal){ %>
+<!-- BootstrapModal  -->
+<div class="modal fade" id="modalFechar" tabindex="-1" role="dialog" aria-labelledby="modalFecharLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="modalFecharLabel"></h4>
+</div>
+<div class="modal-body margemCima15Neg">
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+</div>
+</div>
+</div>
+</div>
+<!-- BootstrapModal  -->
+<div class="modal fade" id="modalSemFechar" tabindex="-1" role="dialog" aria-labelledby="modalSemFecharLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="modalSemFecharLabel"></h4>
+</div>
+<div class="modal-body">
+</div>
+</div>
+</div>
+</div>
+<% } %>
+
+<script src="js/jquery-ui.min.js"></script>
+<%- include('scriptsEstrutura.ejs') %>
+<script src="js/main.js"></script>
+<%- include('scriptsProjeto.ejs') %>

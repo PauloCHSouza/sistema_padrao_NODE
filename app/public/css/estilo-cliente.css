@@ -1,0 +1,98 @@
+﻿/* logo da home */
+.fdt-login-header img {
+	width:100px !important;
+}
+
+/* logo do cliente interno */
+.fdt_ml-logo {
+	/*padding:14px 15px !important;*/
+}
+.fdt_ml-logo img {
+	/*width: 140px !important;*/
+}
+
+/* logo da FT interno */
+.fdt_ml-logoFT {
+	padding:15px 30px 15px 30px !important;
+}
+
+/* logo da FT da home */
+.fdt-login-footer img {
+	/*padding:10px 0;
+	width:100px !important;*/
+}
+
+/* fonte do menu */
+	.fdt_ml .fdt_ml-menu li a {
+		color: #2f1409 !important;
+	}
+/* mouse over dos itens do menu */
+	.fdt_ml .fdt_ml-menu li a:hover {
+		color: #FFF !important;
+		background: #1d9388 !important;
+	}
+/* fundo do módulo aberto no menu */
+	.fdt_ml .fdt_ml-menu li.aberto a {
+		color: #FFF !important;
+		background: #1d9388 !important;
+	}
+	@media (max-width: 960px) {
+		.fdt_ml .fdt_ml-menu li a .fdt_ml-menu-titulo {
+			background: #1d9388 !important;
+		}
+	}
+/* fundo do menu aberto */
+	.fdt_ml .fdt_ml-menu .aberto ul a {
+		background: #41baae !important;
+		color: #FFF !important;
+	}
+/* ícones do menu aberto */
+	.fdt_ml .fdt_ml-menu li .fdt_ml-menu-dropdown a i {
+		color: #f8f7de !important;
+	}
+/* títulos principais dos módulos */
+	h2 {
+		color: #41baae !important;
+	}
+/* títulos das páginas (antes do filtro) */
+	h4 {
+		color: #1d9388 !important;
+	}
+/* títulos internos dentro dos formulários e fichas */
+	.fdt-conteudo-titulo h4 {
+		color: #41baae !important;
+	}
+
+
+
+/* raramente mudamos */
+.fdt-acoes-hide {
+    padding: 9px 10px 9px !important;
+    left: 35px !important;
+	background-color: #666 !important;
+}
+.fdt-acoes {
+    padding:12px !important;
+}
+
+.fdt_ml .fdt_ml-menu.aberto a:hover {
+	background: #666 !important;
+}
+
+.fdt-acao {
+	background-color: #666 !important;
+}
+
+.fdt-acoes-mostra:hover {
+	background-color: #666 !important;
+}
+
+.fdt-acoes i {
+	background-color: #666 !important;
+}
+.fdt_ml .fdt_ml-menu li .fdt_ml-menu-dropdown .divider {
+	border-color: #a0a0a0 !important;
+}
+.fdt-titulo-grupo-indicadores {
+	/*background-color:#e2ebf1;*/
+}

@@ -1,0 +1,40 @@
+<section class="fdt-conteudo">
+    <aside class="fdt_ml">
+        <div class="fdt_ml-logoFT hidden-xs"><a href="" target="_blank"><img src="images/logotipos/logotipoWebappKorbil.png" class="img-responsive" width="100" /></a></div>
+        <div class="fdt_ml-logoFT-xs visible-xs"><a href="" target="_blank"><img src="images/logotipos/logotipoWebappKorbil.png" class="img-responsive" width="70" /></a></div>
+        <div class="fdt_ml-logo"><img src="images/arquivosDesteCliente/logotipoSistema.png" class="img-responsive" width="100" /></div>
+        <div class="fdt_ml-menuInicio hidden-xs">Menu principal</div>
+        <div class="fdt_ml-menuInicio visible-xs">Menu</div>
+        <%- include('menu.ejs') %>
+    </aside>
+    <section class="fdt-contedudo-principal">
+        <!-- CABEÇALHO -->
+        <header class="fdt-contedudo-cabecalho">
+            <nav class="navbar">
+                <div class="" id="fdt-mt-header">
+                    <ul class="nav navbar-nav">
+                        <!-- meus dados e sair para tela mobile -->
+                        <li class="visible-xs"><a href="#"><span data-toggle="tooltip" data-placement="bottom" title="Seus&nbsp;dados"><i class="fa fa-fw fa-user fdt-cor-oliva"></i>&nbsp;</span></a></li>
+                        <li class="visible-xs"><a href="#"><span data-toggle="tooltip" data-placement="bottom" title="Sair"><i class="fa fa-fw fa-power-off fdt-cor-chumbo"></i>&nbsp;</span></a></li>
+                    </ul>
+
+                    <!-- meus dados e sair para tela normal -->
+                    <ul class="nav navbar-nav navbar-right hidden-xs">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle fdt-menu-borda" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-user"></i>&nbsp; <%= global.usuario %><span class="caret"></span></a>
+                            <ul class="dropdown-menu fdt-menu-user">
+                                <li><a href="#"><i class="fa fa-fw fa-user"></i>&nbsp;Meus Dados</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-power-off"></i>&nbsp;Sair</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- /CABEÇALHO -->
+        <!-- TÍTULO / CAMINHO-->
+        <% if (tituloPagina != ""){ %><div class="fdt-pg-cabecalho"><h2><i class="fa fa-fw fa-<%= tituloIcone %>"></i>&nbsp;&nbsp;<%= tituloPagina %></h2></div><% } %>
+        <!-- /TÍTULO / CAMINHO-->
+        <!-- CONTEÚDO-->
+        <div class="fdt-espaco">
+            <div class="fdt-conteudo-central">

@@ -1,0 +1,18 @@
+<nav>
+    <ul class="fdt_ml-menu">
+        <li>
+            <a href="home/index">
+                <i class="fa fa-th"></i>
+                <span class="fdt_ml-menu-titulo">Painel de controle</span>
+            </a>
+        </li>
+        <% if (permissoes.permModUsu){ %>
+            <li>
+                <a href="usu/index">
+                    <i class="fa fa-users"></i>
+                    <span class="fdt_ml-menu-titulo">Usuários</span>
+                </a>
+            </li>
+        <% } %>
+   </ul>
+</nav>

@@ -1,0 +1,32 @@
+<%- include('../padrao/estruturaTopo.ejs') %>
+<%- include('../padrao/cabecalho.ejs') %>
+	<div class="fdt-pg-header">
+		<h4>Seja bem-vindo, <b><%= global.usuario %></b></h4>
+	</div>
+	<div class="fdt-pg-conteudo">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="clearfix"></div>
+					<div class="eof">
+						Nenhum indicador disponível para o seu usuário.
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<%- include('../padrao/rodape.ejs') %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+	$(document).ready(function($){
+	});
+</script>
+</body>
+</html>

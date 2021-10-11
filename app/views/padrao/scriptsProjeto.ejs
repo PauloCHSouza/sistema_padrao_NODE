@@ -1,0 +1,90 @@
+<script type="text/javascript">
+	$('.confirmaFormulario').submit(function (e) {
+		var currentForm = this;
+		var mensagemConfirmacao = $(this).attr("data-mensagemConfirmacao");
+		e.preventDefault();
+		bootbox.confirm(mensagemConfirmacao, function (result) {
+			if (!result) {
+				Alerta.show("Operação cancelada.");
+				$(".bb-alert").addClass("fdt-bg-vermelho");
+			} else {
+				//Alerta.show("Operação confirmada.");
+				//$(".bb-alert").addClass("fdt-bg-verde");
+				currentForm.submit();
+			}
+		});
+	});
+
+	$('.confirmaOperacao').click(function (e) {
+		var link = $(this).attr("href");
+		var mensagemConfirmacao = $(this).attr("data-mensagemConfirmacao");
+		e.preventDefault();
+		bootbox.confirm(mensagemConfirmacao, function (result) {
+			if (result === false) {
+				Alerta.show("Operação cancelada.");
+				$(".bb-alert").addClass("fdt-bg-vermelho");
+			} else {
+				window.location.href = link;
+			}
+		});
+	});
+</script>
+
+<% if (global.confirmaAspMsg != ""){ %>
+	var confirmaAspMsg = global.confirmaAspMsg
+	<script type="text/javascript">
+		$(document).ready(function () {
+			Alerta.show(confirmaAspMsg);
+			$(".bb-alert").addClass("fdt-bg-verde");
+		});
+	</script>
+<% } %>
+<% if (global.alertaAspMsg != ""){ %>
+	var alertaAspMsg = global.alertaAspMsg
+	<script type="text/javascript">
+		$(document).ready(function () {
+			Alerta.show(alertaAspMsg);
+			$(".bb-alert").addClass("fdt-bg-laranja");
+		});
+	</script>
+<% } %>
+
+<% if (global.alertaRetornaAspMsg != ""){ %>
+	<script type="text/javascript">
+	var alertaRetornaAspMsg = global.alertaRetornaAspMsg
+		$(document).ready(function () {
+			bootbox.alert(alertaRetornaAspMsg, function() {
+				history.go(-1);
+			});
+		});
+	</script>
+<% } %>
+
+	<script type="text/javascript">
+		$("#modalFechar").on("show.bs.modal", function(e) {
+			var link = $(e.relatedTarget);
+			var tituloModal = link.attr("data-tituloModal");
+			$(this).find(".modal-body").load(link.attr("href"));
+			$(this).find(".modal-title").html(tituloModal);
+		});
+
+		$("#modalSemFechar").on("show.bs.modal", function(e) {
+			var link = $(e.relatedTarget);
+			var tituloModal = link.attr("data-tituloModal");
+			$(this).find(".modal-body").load(link.attr("href"));
+			$(this).find(".modal-title").html(tituloModal);
+		});
+	</script>
+
+<% if (global.appLoggedFDTASP){ %>
+	<script type="text/javascript">
+		ajaxMantemLogado();
+
+		setInterval(ajaxMantemLogado, 60000); 
+
+		function ajaxMantemLogado() {
+			$("#manterLogado").load('fab/ajax/manterLogadoScript.asp');
+		}
+
+	</script>
+<% } %>
