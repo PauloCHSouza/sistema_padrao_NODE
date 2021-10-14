@@ -1,0 +1,90 @@
+<%- include('../../padrao/estruturaTopo.ejs') %>
+<%- include('../../padrao/cabecalho.ejs') %>
+				<div class="fdt-pg-header">
+                    <a class="fdt-icon fdt-toggle-filtro" data-toggle="tooltip" data-placement="top" title="Filtrar"><i class="fdt-icon-header fal fa-filter fa-dourado"></i></a>                        
+                    <% if(permissoes.permUsuAdmin){ %><a href="formulario" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Incluir"><i class="fdt-icon-header fal fa-plus fa-verde"></i></a> <% } %>                       
+				</div>
+				<div class="fdt-pg-conteudo">
+					<div class="table-responsive">
+                        <table class="table table-hover">
+							<thead>
+                                <tr>
+									<th class="text-center" width="20"></th>
+									<th class="text-center" width="30"></th>
+									<th>Ícone</th>
+									<th>Nome<br /><span class="nor ita cin fs13">Sobrenome</span></th>
+									<th>E-mail<br /><span class="nor ita cin fs13">Login</span></th>
+									<th>Cargo<br /><span class="nor ita cin fs13">Área</span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<% iconeCalc = 20 + (30 * icons) %>
+								<% for(var i = 0; i < usuarios.length; i++) { %> 
+									<tr>
+										<td class="text-center fdt-counter"><%= (i + 1) %></td>
+										<td width="30" class="fdt-acao">
+											<div class="fdt-acoes-mostra"><a class="fdt-acoes" data-toggle="tooltip" data-placement="top" title="Ações"><i class="fal fa-bars"></i></a>
+												<div class="fdt-acoes-hide" style="width: <%= iconeCalc %>px;">
+													<% if(permissoes.permUsuAdmin){ %><a href="formulario.asp?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fal fa-pen-alt fa-verde"></i></a> <% } %>
+													<% if(global.varPermissoes && permissoes.permUsuPerm){ %><a href="permissoes?idUS=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Permissões"><i class="fal fa-key fa-roxo"></i></a> <% } %>
+													<a href="historico?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Histórico"><i class="fal fa-history fa-turquesa"></i></a>
+													<a href="enviarDadosScript?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Enviar e-mail de bem-vindo"><i class="fal fa-envelope fa-laranja"></i></a>
+													<% if(permissoes.permUsuAdmin){ %><a href="excluirScript.asp?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon confirmaOperacao" data-mensagemConfirmacao="Deseja excluir este registro?" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fal fa-times fa-vermelho"></i></a> <% } %>
+												</div>
+											</div>
+										</td>
+										<td><span class="siglaUsuario" style="background-color: <%= usuarios[i].cor %>;" data-toggle="tooltip" data-placement="top" title="<%= usuarios[i].nome %>"><%= usuarios[i].nome.toUpperCase().substring(0,1) %></span></td>
+										<td><%= usuarios[i].nome %><br /><span class="ita cin fs13"><%= usuarios[i].sobrenome %></span></td>
+										<td><%= usuarios[i].email %><br /><span class="ita cin fs13"><%= usuarios[i].login %></span></td>
+										<td><%= usuarios[i].cargo %><br /><span class="ita cin fs13"><%= usuarios[i].area %></span></td>
+									</tr>
+								<% } %>
+								<% if (usuarios.length <= 0){ %>
+									<tr>
+										<td class="eof" colspan="<%= cols %>">Nenhum registro até o momento.</td>
+									</tr>
+								<% } %>
+                           </tbody>
+                        </table>                        
+
+                    </div>
+                </div>              
+</body>
+</html>
+
+<script>
+	$(document).ready(function($){
+		var $lstCargo = $('select#lstCargo');
+
+		$("select#lstArea").change(function () {
+			var valor = $(this).val();
+		
+			$lstCargo.empty().show();
+			$lstCargo.append("<option value=\"\">Aguarde...</option>");
+			$.ajax({
+				url: "../ajax/jsonAreasCargos.asp",
+				dataType: 'json',
+				async: false, 
+				data: {"idPk": valor},
+				success: function(dados){
+					$lstCargo.empty();
+					if (dados.length > 0) {
+						var opcoes = ["<option value=\"\">Todos</option>"];
+						$.each(dados, function (i, item) {
+							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
+						});
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					} else {
+						var opcoes = ["<option value=\"\">Todos</option>"];
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+			});
+		
+		});
+	});
+</script>
+<%- include('../../padrao/rodape.ejs') %>
+

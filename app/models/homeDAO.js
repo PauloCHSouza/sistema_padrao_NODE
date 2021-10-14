@@ -1,6 +1,3 @@
-var config = require("../../config/dbConnection").config;
-const sql = require("mssql");
-
 function HomeDAO(connection){
     this._connection = connection
 }

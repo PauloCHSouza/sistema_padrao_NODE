@@ -1,17 +1,24 @@
 <nav>
     <ul class="fdt_ml-menu">
         <li>
-            <a href="home/index">
+            <a href="/">
                 <i class="fa fa-th"></i>
                 <span class="fdt_ml-menu-titulo">Painel de controle</span>
             </a>
         </li>
         <% if (permissoes.permModUsu){ %>
-            <li>
-                <a href="usu/index">
-                    <i class="fa fa-users"></i>
+            <li class="fdt_ml-menu-item<% if (varModulo == "usu"){ %> aberto<% } %>">
+                <a class="fdt_ml-menu-toggle">
+                    <i class="fal fa-user"></i>
                     <span class="fdt_ml-menu-titulo">Usuários</span>
+                    <span class="fdt_ml-menu-seta"><i class="fal fa-angle-left"></i></span>
                 </a>
+                <ul class="fdt_ml-menu-dropdown">
+                    <li><a href="/usu/usuarios/index"><i class="fal fa-user"></i>Usuários</a></li>
+                    <% if (permissoes.permUsuList){ %><li><a href="/usu/areas/index"><i class="fal fa-list"></i>Áreas</a></li><% } %>
+                    <% if (permissoes.permUsuList){ %><li><a href="/usu/cargos/index"><i class="fal fa-list"></i>Cargos</a></li><% } %>
+                    <% if (global.varLog && permissoes.permFabLog){ %><li><a href="/fab/log/index"><i class="fal fa-cogs"></i>LOG</a></li><% } %>
+                </ul>
             </li>
         <% } %>
    </ul>

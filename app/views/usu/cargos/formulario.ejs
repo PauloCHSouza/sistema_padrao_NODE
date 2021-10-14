@@ -1,0 +1,38 @@
+<%- include('../../padrao/estruturaTopo.ejs') %>
+<%- include('../../padrao/cabecalho.ejs') %>
+    <div class="fdt-pg-header">
+        <h4><%= subTitulo %></h4>
+    </div>
+    <div class="fdt-pg-conteudo">
+        <% validacao = true %>
+        <form id="fdt-form" method="post" action="salvar" data-parsley-validate="">
+            <div class="row">
+                <div class="form-group col-sm-3" >
+                    <label for="idArea">*Área:</label>
+                    <select name="idArea" id="idArea" class="form-control selectpicker" required data-live-search="true">
+                        <option value=""></option>
+							<% for(var i = 0; i < areas.length; i++) { %> 
+                                <option value="<%= areas[i].idArea %>"><%= areas[i].titulo %></option>
+                            <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-9"> 
+                    <label for="titulo">*Título:</label>
+                    <input type="text" name="titulo" id="titulo" value="" required class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+					<button type="submit" class="btn fdt-btn-vermelho" onclick="history.back(); return false;">Cancelar</button>
+					<button type="submit" class="btn fdt-btn-verde">Gravar informações</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</body>
+</html>
+<%- include('../../padrao/rodape.ejs') %>
+

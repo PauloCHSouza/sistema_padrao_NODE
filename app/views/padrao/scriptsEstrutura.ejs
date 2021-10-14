@@ -1,22 +1,22 @@
 
     <!-- MOMENT para calendar e datetimepicker -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/moment-pt-br.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/moment-pt-br.js"></script>
 
 
     <% if (global.calendar) { 
 		%>
         <!-- FULLCALENDAR -->
-        <script src="js/fullcalendar/fullcalendar.min.js"></script>
-        <script src="js/fullcalendar/pt-br.js"></script>
+        <script src="/js/fullcalendar/fullcalendar.min.js"></script>
+        <script src="/js/fullcalendar/pt-br.js"></script>
     <% } %>
 
 
     <!-- BOOTSTRAP -->
-    <!--<script src="js/bootstrap.min.js"></script>-->
+    <script src="/js/bootstrap.min.js"></script>
 
 	<% if (global.bootColorpicker) { %>
-        <script src="js/bootstrap-colorpicker.min.js"></script>
+        <script src="/js/bootstrap-colorpicker.min.js"></script>
         <script>
             $(function () {
                 $('.colorpicker').colorpicker();
@@ -28,11 +28,11 @@
 
 	<% if (global.validacao) { %>
 		<!-- VALIDAÇÃO E MÁSCARAS -->
-		<script src="js/jquery.maskedinput.min.js"></script>
-		<script src="js/jquery.validate.min.js"></script>
-		<script src="js/additional-methods.min.js"></script>
-		<script src="js/parsley.min.js"></script>
-		<script src="js/i18n/pt-br.js"></script>
+		<script src="/js/jquery.maskedinput.min.js"></script>
+		<script src="/js/jquery.validate.min.js"></script>
+		<script src="/js/additional-methods.min.js"></script>
+		<script src="/js/parsley.min.js"></script>
+		<script src="/js/i18n/pt-br.js"></script>
 		<script type="text/javascript">
 			window.Parsley.setLocale('pt-br');
 		</script>
@@ -86,23 +86,12 @@
 
 
 
-				$(function () {
-					$('#fdt-form').parsley().on('field:validated', function () {
-						var ok = $('.parsley-error').length === 0;
-						$('.bs-callout-info').toggleClass('hidden', !ok);
-						$('.bs-callout-warning').toggleClass('hidden', ok);
-					})
-					.on('form:submit', function () {
-						return true;
-					});
-				});
-
 		</script>
 	<% } %>
 
 
     <!-- maskMoney -->
-    <script src="js/jquery.maskMoney.min.js"></script>
+    <script src="/js/jquery.maskMoney.min.js"></script>
     <script>
         $(function () {
             $(".fdt-mask-decimal-1").maskMoney({
@@ -141,14 +130,14 @@
 
 	<% if (global.typeahead) { %>
         <!-- TYPEHEADE AUTOCOMPLETE -->
-        <script src="js/typeaheadjs.js"></script>
-        <script src="js/typeahead.js"></script>
+        <script src="/js/typeaheadjs.js"></script>
+        <script src="/js/typeahead.js"></script>
     <% } %>
 
 
 
     <!-- BOOTSTRAP EXTENSÕES -->
-	<script src="js/bootstrap-datetimepicker.js"></script>
+	<script src="/js/bootstrap-datetimepicker.js"></script>
 	<script>
 		$('.datepicker input').datetimepicker({
 			format: 'DD/MM/YYYY',
@@ -189,7 +178,7 @@
 
 
     <!-- bootBox -->
-	<script src="js/bootbox.min.js"></script>
+	<script src="/js/bootbox.min.js"></script>
     <script>
         var Alerta = (function() {
             "use strict";
@@ -219,11 +208,11 @@
     </script>
 
     <!-- bootSelect -->
-    <script src="js/bootstrap-select.min.js"></script>
+    <script src="/js/bootstrap-select.min.js"></script>
 
 	<% if (global.editable) { %>
 		<!-- bootEditable -->
-		<script src="js/bootstrap-editable.min.js"></script>
+		<script src="/js/bootstrap-editable.min.js"></script>
 		<script>
 			var substringMatcher = function (strs) {
 				return function findMatches(q, cb) {
@@ -257,16 +246,6 @@
 				'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
 				'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 			];
-
-			$('#scrollable-dropdown-menu .typeahead').typeahead({
-				hint: true,
-				highlight: true,
-				minLength: 1
-			},
-			{
-				name: 'states',
-				source: substringMatcher(states)
-			});
 			$(document).ready(function () {
 				$('#username').editable();
 				$('#comments').editable();
@@ -319,8 +298,8 @@
 
     <!-- CKEDITOR -->
     <% if (global.editor) { %>
-		<script src="js/ckeditor/ckeditor.js"></script>
-		<script src="js/ckeditor/samples/js/sample.js"></script>
+		<script src="/js/ckeditor/ckeditor.js"></script>
+		<script src="/js/ckeditor/samples/js/sample.js"></script>
 		<script>
 			initSample();
 		</script>
@@ -328,7 +307,7 @@
 
 
     <% if (global.chart) { %>
-		<script src="js/chart.min.js"></script>
+		<script src="/js/chart.min.js"></script>
 		<script>
 			var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
@@ -504,40 +483,9 @@
 						}
 
 					];
-
-			window.onload = function(){
-				var ctx = document.getElementById("bar").getContext("2d");
-				window.myBar = new Chart(ctx).Bar(barChartData, {
-					responsive : true
-				});
-				var ctx2 = document.getElementById("line").getContext("2d");
-				window.myLine = new Chart(ctx2).Line(lineChartData, {
-					responsive: true
-				});
-				window.myRadar = new Chart(document.getElementById("radar").getContext("2d")).Radar(radarChartData, {
-					responsive: true
-				});
-				var ctx3 = document.getElementById("pizza").getContext("2d");
-				window.myPie = new Chart(ctx3).Pie(pieData, {responsive : true});
-
-				var ctx4 = document.getElementById("donuts").getContext("2d");
-				window.myDoughnut = new Chart(ctx4).Doughnut(doughnutData, {responsive : true});
-        	    
-				var ctx5 = document.getElementById("polar").getContext("2d");
-				window.myPolarArea = new Chart(ctx5).PolarArea(polarData, {
-					responsive:true
-				});
-				}
-
 		</script>
 	<% } %>
 
-	<!-- popover -->
-	<script>
-		$(function () {
-			$('[data-toggle="popover"]').popover()
-		})
-	</script>
 
 	<script>
 		$(document).ready(function($){

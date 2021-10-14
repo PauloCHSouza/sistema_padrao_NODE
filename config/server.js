@@ -8,16 +8,18 @@ global.appLoggedFDTASP = false;
 global.usuario = "Paulo";
 global.BootstrapModal = true;
 global.varTitleApp = "Sistema padrão";
-global.calendar = false;
-global.bootColorpicker = false;
-global.validacao = false;
+global.calendar = true;
+global.bootColorpicker = true;
+global.validacao = true;
 global.typeahead = false;
-global.editable = false;
+global.editable = true;
 global.editor = false;
-global.chart = false;
-global.confirmaAspMsg = false;
-global.alertaAspMsg = false;
+global.chart = true;
+global.confirmaAspMsg = true;
+global.alertaAspMsg = true;
 global.alertaRetornaAspMsg = false;
+global.varLog = true;
+global.varPermissoes = true;
 
 var app = express();
 app.set("view engine", "ejs");
@@ -33,7 +35,9 @@ app.use(session({
     resave: false, 
     cookie: { 
         permModUsu: true,
-        teste: false
+        permUsuAdmin: true,
+        permUsuList: true,
+        permUsuPerm: true
     }
 }));
 
@@ -43,7 +47,5 @@ consign()
     .then("app/models")
     .then("app/controllers")
     .into(app);
-
-//Permissões
 
 module.exports = app;

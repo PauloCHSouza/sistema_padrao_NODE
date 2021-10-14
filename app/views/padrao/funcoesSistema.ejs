@@ -1,0 +1,22 @@
+<% 
+//identificação do usuário
+global.fnIdentificacaoUsuario = function fnIdentificacaoUsuario(nome, cor, foto){
+	console.log(nome !== null);
+    var frag = document.createDocumentFragment();
+    var elem = document.createElement('td');
+	var resultado
+	if (nome == null || nome == ''){
+		resultado = "<span class='siglaUsuario' style='background-color:#000;' data-toggle='tooltip' data-placement='top' title='Aguardando definição'>?</span>"
+    }else if(foto !== null || foto !== ''){
+		resultado = "<span class='siglaUsuario' style='background-color:" + cor + "; background-image:url('/usu/fotos/'" + foto + "); background-size: cover;' data-toggle='tooltip' data-placement='top' title='" + nome + "'>&nbsp;</span>"
+    }else{
+		resultado = "<span class='siglaUsuario' style='background-color:" + cor + ";' data-toggle='tooltip' data-placement='top' title='" + nome + "'>" + nome.toUpperCase() + "</span>"'
+	}
+
+    elem.innerHTML = resultado;
+    while (elem.childNodes[0]) {
+        frag.appendChild(elem.childNodes[0]);
+    }
+    return frag;
+};
+%>

@@ -1,0 +1,149 @@
+<%- include('../../padrao/estruturaTopo.ejs') %>
+<%- include('../../padrao/cabecalho.ejs') %>
+    <div class="fdt-pg-header">
+        <h4><%= subTitulo %></h4>
+    </div>
+    <div class="fdt-pg-conteudo">
+        <% global.validacao = true %>
+        <form id="fdt-form" method="post" action="salvar" data-parsley-validate="">
+            <div class="fdt-conteudo-titulo">
+                <h4>Dados principais</h4>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-4"> 
+                    <label for="nome">*Nome:</label> 
+                    <input type="text" name="nome" id="nome" value="" maxlength="50" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-6"> 
+                    <label for="sobrenome">Sobrenome:</label> 
+                    <input type="text" name="sobrenome" id="sobrenome" value="" maxlength="50" class="form-control" />
+                </div>
+                <div class="col-sm-2">
+                    <label for="colorpicker">Cor:</label>
+                    <div class="input-group">
+                        <input type="text" name="colorpicker" id="colorpicker" value="" class="input-sm form-control colorpicker" >
+                        <input type="hidden" name="cor" id="cor" value="" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6" >
+                    <label for="idArea">*Área:</label>
+                    <select name="idArea" id="lstArea" required class="form-control selectpicker" data-live-search="true">
+                        <option value=""></option>
+                        <% for(var i = 0; i < areas.length; i++){ %>
+                            <option value="<%= areas[i].idArea %>"><%= areas[i].titulo %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6" >
+                    <label for="idCargo">*Cargo:</label>
+                    <select name="idCargo" id="lstCargo" required class="form-control selectpicker" data-live-search="true">
+                        <option value=""></option>
+                        <% for(var i = 0; i < cargos.length; i++){ %>
+                            <option value="<%= cargos[i].idCargo %>"><%= cargos[i].titulo %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+					<button type="submit" class="btn fdt-btn-vermelho" onclick="history.back(); return false;">Cancelar</button>
+					<button type="submit" class="btn fdt-btn-verde">Gravar informações</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+	$(document).ready(function($){
+
+		$("select#lstArea").change(function () {
+			var $lstCargo = $('select#lstCargo');
+			var valor = $(this).val();
+			$lstCargo.empty().show();
+			$lstCargo.append("<option value=\"\">Aguarde...</option>");
+			$.ajax({
+				url: "../ajax/jsonAreasCargos.asp",
+				dataType: 'json',
+				async: false, 
+				data: {"idPk": valor},
+				success: function(dados){
+					$lstCargo.empty();
+					if (dados.length > 0) {
+						var opcoes = ["<option value=\"\"></option>"];
+						$.each(dados, function (i, item) {
+							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
+						});
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					} else {
+						var opcoes = ["<option value=\"\"></option>"];
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function($){
+		$("select#lstEstado").change(function () {
+			var $lstCidade = $('select#lstCidade');
+			var valor = $(this).val();
+			$lstCidade.empty().show();
+			$lstCidade.append("<option value=\"\">Aguarde...</option>");
+			$.ajax({
+				url: "../../fab/ajax/estados-cidades.asp",
+				dataType: 'json',
+				async: false, 
+				data: {"idPk": valor},
+				success: function(dados){
+					$lstCidade.empty();
+					if (dados.length > 0) {
+						var opcoes = ["<option value=\"\"></option>"];
+						$.each(dados, function (i, item) {
+							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
+						});
+						$lstCidade.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					} else {
+						var opcoes = ["<option value=\"\"></option>"];
+						$lstCidade.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+			});
+		});
+
+		$("#trocaArquivo").click(function () {
+			var checado = $("#trocaArquivo").prop("checked");
+			if (checado) {
+				$("#rowEditaArquivo").show();
+				$("#rowApagaArquivo").show();
+			} else {
+				$("#rowEditaArquivo").hide();
+				$("#rowApagaArquivo").hide();
+			}
+		});
+		$("#apagarAtual").click(function () {
+			var checado = $("#apagarAtual").prop("checked");
+			if (checado) {
+				$("#rowEditaArquivo").hide();
+			} else {
+				$("#rowEditaArquivo").show();
+			}
+		});
+
+	});
+</script>
+<%- include('../../padrao/rodape.ejs') %>
+

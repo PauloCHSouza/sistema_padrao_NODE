@@ -1,0 +1,89 @@
+<%- include('../../padrao/estruturaTopo.ejs') %>
+<%- include('../../padrao/cabecalho.ejs') %>
+				<div class="fdt-pg-header">
+                    <a class="fdt-icon fdt-toggle-filtro" data-toggle="tooltip" data-placement="top" title="Filtrar"><i class="fdt-icon-header fal fa-filter fa-dourado"></i></a>                        
+                    <a href="formulario" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Incluir"><i class="fdt-icon-header fal fa-plus fa-verde"></i></a>                       
+				</div>
+				<div class="fdt-pg-conteudo">
+					<div class="table-responsive">
+                        <table class="table table-hover">
+							<thead>
+                                <tr>
+									<th class="text-center" width="20"></th>
+									<th class="text-center" width="30"></th>
+									<th>Titulo</th>
+									<th>Área</th>
+									<th class="text-center" width="30"><i class="icon fa fa-male" data-toggle="tooltip" data-placement="top" title="Número de usuários"></i></th>
+								</tr>
+							</thead>
+							<tbody>
+								<% iconeCalc = 20 + (30 * icons) %>
+								<% for(var i = 0; i < cargos.length; i++) { %> 
+									<tr>
+										<td class="text-center fdt-counter"><%= (i + 1) %></td>
+										<td width="30" class="fdt-acao">
+											<div class="fdt-acoes-mostra"><a class="fdt-acoes" data-toggle="tooltip" data-placement="top" title="Ações"><i class="fal fa-bars"></i></a>
+												<div class="fdt-acoes-hide" style="width: <%= iconeCalc %>px;">
+													<a href="formularioEditar?idPK=<%= cargos[i].idCargo %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fal fa-pen-alt fa-verde"></i></a>
+													<% if (cargos[i].nrUsuarios > 0){ %>
+														<a class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Usuários relacionados"><i class="fal fa-times fa-cinza"></i></a>
+													<% }else{ %>
+														<a href="excluir?idPK=<%= cargos[i].idCargo %>" class="fdt-icon confirmaOperacao" data-mensagemConfirmacao="Deseja excluir este registro?" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fal fa-times fa-vermelho"></i></a>
+													<% } %>
+												</div>
+											</div>
+										</td>
+										<td><%= cargos[i].titulo %></td>
+										<td><%= cargos[i].area %></td>
+										<td><%= cargos[i].nrUsuarios %></td>
+									</tr>
+								<% } %>
+								<% if (cargos.length <= 0){ %>
+									<tr>
+										<td class="eof" colspan="<%= cols %>">Nenhum registro até o momento.</td>
+									</tr>
+								<% } %>
+                           </tbody>
+                        </table>                        
+
+                    </div>
+                </div>              
+</body>
+</html>
+
+<script>
+	$(document).ready(function($){
+		var $lstCargo = $('select#lstCargo');
+
+		$("select#lstArea").change(function () {
+			var valor = $(this).val();
+		
+			$lstCargo.empty().show();
+			$lstCargo.append("<option value=\"\">Aguarde...</option>");
+			$.ajax({
+				url: "../ajax/jsonAreasCargos.asp",
+				dataType: 'json',
+				async: false, 
+				data: {"idPk": valor},
+				success: function(dados){
+					$lstCargo.empty();
+					if (dados.length > 0) {
+						var opcoes = ["<option value=\"\">Todos</option>"];
+						$.each(dados, function (i, item) {
+							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
+						});
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					} else {
+						var opcoes = ["<option value=\"\">Todos</option>"];
+						$lstCargo.append(opcoes.join());
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+			});
+		
+		});
+	});
+</script>
+<%- include('../../padrao/rodape.ejs') %>
+

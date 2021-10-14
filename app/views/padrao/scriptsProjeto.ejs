@@ -31,19 +31,17 @@
 </script>
 
 <% if (global.confirmaAspMsg != ""){ %>
-	var confirmaAspMsg = global.confirmaAspMsg
 	<script type="text/javascript">
 		$(document).ready(function () {
-			Alerta.show(confirmaAspMsg);
+			Alerta.show(<%= global.confirmaAspMsg %>);
 			$(".bb-alert").addClass("fdt-bg-verde");
 		});
 	</script>
 <% } %>
 <% if (global.alertaAspMsg != ""){ %>
-	var alertaAspMsg = global.alertaAspMsg
 	<script type="text/javascript">
 		$(document).ready(function () {
-			Alerta.show(alertaAspMsg);
+			Alerta.show(<%= global.alertaAspMsg %>);
 			$(".bb-alert").addClass("fdt-bg-laranja");
 		});
 	</script>
