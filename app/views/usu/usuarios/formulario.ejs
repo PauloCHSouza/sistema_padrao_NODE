@@ -39,12 +39,12 @@
                         <% } %>
                     </select>
                 </div>
-                <div class="form-group col-sm-6" >
+                <div class="form-group col-sm-6" id="divCargo" >
                     <label for="idCargo">*Cargo:</label>
                     <select name="idCargo" id="lstCargo" required class="form-control selectpicker" data-live-search="true">
-                        <option value=""></option>
+                        <option value="" data-i="0"></option>
                         <% for(var i = 0; i < cargos.length; i++){ %>
-                            <option value="<%= cargos[i].idCargo %>"><%= cargos[i].titulo %></option>
+                            <option value="<%= cargos[i].idCargo %>" data-idArea="<%= cargos[i].idArea %>" data-i="<%= i + 1 %>"><%= cargos[i].cargo %></option>
                         <% } %>
                     </select>
                 </div>
@@ -63,86 +63,20 @@
 </body>
 </html>
 <script>
-	$(document).ready(function($){
-
-		$("select#lstArea").change(function () {
-			var $lstCargo = $('select#lstCargo');
-			var valor = $(this).val();
-			$lstCargo.empty().show();
-			$lstCargo.append("<option value=\"\">Aguarde...</option>");
-			$.ajax({
-				url: "../ajax/jsonAreasCargos.asp",
-				dataType: 'json',
-				async: false, 
-				data: {"idPk": valor},
-				success: function(dados){
-					$lstCargo.empty();
-					if (dados.length > 0) {
-						var opcoes = ["<option value=\"\"></option>"];
-						$.each(dados, function (i, item) {
-							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
-						});
-						$lstCargo.append(opcoes.join());
-						$('.selectpicker').selectpicker('refresh');
-					} else {
-						var opcoes = ["<option value=\"\"></option>"];
-						$lstCargo.append(opcoes.join());
-						$('.selectpicker').selectpicker('refresh');
-					}
-				}
+	$(document).ready(function () {
+		$("#lstArea").change(function () {
+			var valor = $("#lstArea").val();
+			$("#lstCargo").find("[data-idArea='"+valor+"']").each(function() {
+				$(this).show();
+				$('.selectpicker').selectpicker('refresh');
+			});
+			$("#lstCargo").find(":not([data-idArea='"+valor+"'])").each(function() {
+				$(this).hide();
+				var index = $(this).data("i");
+				$('.selectpicker').selectpicker('refresh');
+				$('#divCargo').find('[data-original-index="'+index+'"]').remove();
 			});
 		});
-	});
-</script>
-<script>
-	$(document).ready(function($){
-		$("select#lstEstado").change(function () {
-			var $lstCidade = $('select#lstCidade');
-			var valor = $(this).val();
-			$lstCidade.empty().show();
-			$lstCidade.append("<option value=\"\">Aguarde...</option>");
-			$.ajax({
-				url: "../../fab/ajax/estados-cidades.asp",
-				dataType: 'json',
-				async: false, 
-				data: {"idPk": valor},
-				success: function(dados){
-					$lstCidade.empty();
-					if (dados.length > 0) {
-						var opcoes = ["<option value=\"\"></option>"];
-						$.each(dados, function (i, item) {
-							opcoes.push('<option value="' + item.valor + '">' + item.texto + '</option>');
-						});
-						$lstCidade.append(opcoes.join());
-						$('.selectpicker').selectpicker('refresh');
-					} else {
-						var opcoes = ["<option value=\"\"></option>"];
-						$lstCidade.append(opcoes.join());
-						$('.selectpicker').selectpicker('refresh');
-					}
-				}
-			});
-		});
-
-		$("#trocaArquivo").click(function () {
-			var checado = $("#trocaArquivo").prop("checked");
-			if (checado) {
-				$("#rowEditaArquivo").show();
-				$("#rowApagaArquivo").show();
-			} else {
-				$("#rowEditaArquivo").hide();
-				$("#rowApagaArquivo").hide();
-			}
-		});
-		$("#apagarAtual").click(function () {
-			var checado = $("#apagarAtual").prop("checked");
-			if (checado) {
-				$("#rowEditaArquivo").hide();
-			} else {
-				$("#rowEditaArquivo").show();
-			}
-		});
-
 	});
 </script>
 <%- include('../../padrao/rodape.ejs') %>

@@ -39,23 +39,18 @@
             res.redirect("/");
         }
         usuariosModel.getAreas(function(areasError, areasResult) {
-            for(i = 0; i < areasResult.length; i++){
-                paran = {};
-                paran["idPK"] = areasResult[i].idArea;
-                
-                usuariosModel.getCargoByArea(paran, function(cargosError, cargosResult) {
+            usuariosModel.getCargosAreas(function(cargosError, cargosResult) {
                 res.render("usu/usuarios/formulario", {
-                        tituloPagina: "Usuários",
-                        subTitulo: "Incluindo usuário",
-                        tituloIcone: "user",
-                        calendarjsPDF: false,
-                        varModulo: "usu",
-                        permissoes: req.session.cookie,
-                        areas: areasResult,
-                        cargos: cargosResult
-                    });
+                    tituloPagina: "Usuários",
+                    subTitulo: "Incluindo usuário",
+                    tituloIcone: "user",
+                    calendarjsPDF: false,
+                    varModulo: "usu",
+                    permissoes: req.session.cookie,
+                    areas: areasResult,
+                    cargos: cargosResult
                 });
-            }
+            });
         });
     }
 

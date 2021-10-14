@@ -9,6 +9,12 @@ function usuariosDAO(connection){
     usuariosDAO.prototype.salvarUsuario = function (usuario, callback){
         this._connection.query("insert into usuusuarios set ? ", usuario, callback);
     }
+    usuariosDAO.prototype.getCargosAreas = function (callback){
+        this._connection.query('SELECT c.idCargo, c.idArea, c.titulo AS cargo, a.titulo AS area '+
+                               'from usucargos c '+
+                               'inner join usuareas a on a.idArea = c.idArea '+
+                               'WHERE c.ativo = 1', callback)
+    }
 
 //DAO Areas
     usuariosDAO.prototype.getAreas = function (callback){
