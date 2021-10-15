@@ -20,6 +20,7 @@ global.alertaAspMsg = true;
 global.alertaRetornaAspMsg = false;
 global.varLog = true;
 global.varPermissoes = true;
+global.varDashboardGeral = true;
 
 var app = express();
 app.set("view engine", "ejs");
@@ -44,6 +45,7 @@ app.use(session({
 consign()
     .include("app/routes")
     .then("config/dbConnection.js")
+    .then("config/funcoes.js")
     .then("app/models")
     .then("app/controllers")
     .into(app);

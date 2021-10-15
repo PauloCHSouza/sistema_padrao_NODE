@@ -50,6 +50,209 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
+            <div class="fdt-conteudo-titulo">
+                <h4>Acesso ao sistema</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2"> 
+                    <label for="login">*Login:</label> 
+                    <input type="text" name="login" id="login" value="" maxlength="25" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="senha">*Senha:</label> 
+                    <input type="password" name="senha" id="senha" value="" maxlength="25" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="dashboardInicial">Dashboard inicial:</label>
+                    <select name="dashboardInicial" id="dashboardInicial" class="form-control selectpicker">
+                        <option value="">Nenhum</option>
+                        <% if(permissoes.varModFab && global.varDashboardGeral){ %><option value="fab"><%= varClientApp %></option><% } %>
+                        <% if(permissoes.varModFin){ %><option value="fin">Financeiro</option><% } %>
+                        <% if(permissoes.varModCli){ %><option value="cli">Clientes</option><% } %>
+                        <% if(permissoes.varModTar){ %><option value="ven">Tarefas</option><% } %>
+                        <% if(permissoes.varModTic){ %><option value="tic">Tickets</option><% } %>
+                        <% if(permissoes.varModFlw){ %><option value="flw">Follow-up</option><% } %>
+                        <% if(permissoes.varModOpo){ %><option value="opo">Oportunidades</option><% } %>
+                        <% if(permissoes.varModVen){ %><option value="ven">Vendas de produtos</option><% } %>
+                        <% if(permissoes.varModVes){ %><option value="ven">Vendas de serviços</option><% } %>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Foto</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="<%= campo %>"><i class="icon fa fa-image"></i> Foto:</label>
+                    <input id="input-b1" name="<%= campo %>" id="<%= campo %>" type="file" class="file" data-show-upload="false" data-show-caption="false" data-browse-on-zone-click="true" data-msg-placeholder="Select {files} for upload..."  data-allowed-file-extensions='["png", "gif", "jpg", "jpeg"]'>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Demais informações pessoais</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2" >
+                    <label for="diaNascimento">Dia de nascimento:</label>
+                    <select name="diaNascimento" id="diaNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = 1; x < 31; x++){ %>
+                            <option value="<%= x %>"><%= x %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="mesNascimento">Mês de nascimento:</label>
+                    <select name="mesNascimento" id="mesNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = 1; x <= 12; x++){ %>
+                            <option value="<%= x %>"><%= global.month[x-1] %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="anoNascimento">Ano de nascimento:</label>
+                    <select name="anoNascimento" id="anoNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = new Date().getFullYear(); x >= 1900; x--){ %>
+                            <option value="<%= x %>"><%= x %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="estadoCivil">Estado civil:</label>
+                    <select name="estadoCivil" id="estadoCivil" class="form-control selectpicker">
+                        <option value=""></option>
+                        <option value="Solteiro">Solteiro</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Divorciado">Divorciado</option>
+                        <option value="Viúvo">Viúvo</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="formacaoAcademica">Formação acadêmica:</label> 
+                    <input type="text" name="formacaoAcademica" id="formacaoAcademica" value="" maxlength="50" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Informações de contato</h4>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6"> 
+                    <label for="email">*E-mail:</label> 
+                    <input type="email" name="email" id="email" value="" maxlength="75" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="telCelular">Tel. Celular:</label> 
+                    <input type="text" name="telCelular" id="telCelular" value="" maxlength="20" class="form-control fdt-mask-celular" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="telFixo">Tel. Fixo:</label> 
+                    <input type="text" name="telFixo" id="telFixo" value="" maxlength="20" class="form-control fdt-mask-telefone" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+               
+            <div class="row">
+               <div class="form-group col-sm-6"> 
+                    <label for="endereco">Endereço:</label> 
+                    <input type="text" name="endereco" id="endereco" value="" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="numero">Número:</label> 
+                    <input type="text" name="numero" id="numero" value="" maxlength="15" class="form-control" />
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="complemento">Complemento:</label> 
+                    <input type="text" name="complemento" id="complemento" value="" maxlength="25" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+             </div>
+                 
+             <div class="row">
+                 <div class="form-group col-sm-2"> 
+                    <label for="bairro">Bairro:</label> 
+                    <input type="text" name="bairro" id="bairro" value="" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="cep">CEP:</label> 
+                    <input type="text" name="cep" id="cep" value="" maxlength="9" class="form-control fdt-mask-cep" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="lstEstado">Estado:</label>
+                    <select name="estado" id="lstEstado" class="form-control selectpicker" data-live-search="true">
+                        <option value=""></option>
+                        <%for(i = 0; i < global.estados.length; i++){ %>
+                            <option value="<%= global.estados[i].idEstado %>"><%= global.estados[i].descricao %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="lstCidade">Cidade:</label>
+                    <select name="cidade" id="lstCidade" class="form-control selectpicker" data-live-search="true">
+                        <option value=""></option>
+                        <%for(i = 0; i < global.cidades.length; i++){ %>
+                            <option value="<%= global.cidades[i].idCidade %>"><%= global.cidades[i].descricao %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="regiao">Região:</label>
+                    <select name="regiao" id="regiao" class="form-control selectpicker">
+                        <option value=""></option>
+                        <option value="Norte">Norte</option>
+                        <option value="Sul">Sul</option>
+                        <option value="Leste">Leste</option>
+                        <option value="Oeste">Oeste</option>
+                        <option value="Centro">Centro</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Informações financeiras</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2"> 
+                    <label for="salario">Salário:</label> 
+                    <input type="text" name="salario" id="salario" value="" maxlength="14" class="form-control fdt-mask-decimal" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="cpf">CPF:</label> 
+                    <input type="text" name="cpf" id="cpf" value="" maxlength="14" class="form-control fdt-mask-cpf" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="banco">Banco:</label> 
+                    <input type="text" name="banco" id="banco" value="" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="agencia">Agência:</label> 
+                    <input type="text" name="agencia" id="agencia" value="" maxlength="10" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="conta">Conta:</label> 
+                    <input type="text" name="conta" id="conta" value="" maxlength="20" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Outras informações</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12"> 
+                    <label for="observacoes">Observações:</label> 
+                    <textarea name="observacoes" id="observacoes" cols="50" rows="3" class="form-control" maxlength="4000"></textarea>
+                </div>
+                <div class="clearfix"></div>
+            </div>
 
             <div class="row">
                 <div class="form-group col-sm-12">
@@ -61,9 +264,10 @@
         </form>
     </div>
 </body>
-</html>
+</html> 
 <script>
 	$(document).ready(function () {
+        $(".file-drop-zone-title").html("Arraste e solte o arquivo aqui...<br>(ou clique para selecionar um arquivo");
 		$("#lstArea").change(function () {
 			var valor = $("#lstArea").val();
 			$("#lstCargo").find("[data-idArea='"+valor+"']").each(function() {

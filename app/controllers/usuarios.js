@@ -46,6 +46,10 @@
                     tituloIcone: "user",
                     calendarjsPDF: false,
                     varModulo: "usu",
+                    campo: "foto",
+                    pasta: "usu",
+                    subPasta: "fotos",
+                    preview: "",
                     permissoes: req.session.cookie,
                     areas: areasResult,
                     cargos: cargosResult
