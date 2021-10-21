@@ -3,17 +3,38 @@ function usuariosDAO(connection){
 }
 
 //DAO Usuários
-    usuariosDAO.prototype.getUsuario = function (callback){
+    usuariosDAO.prototype.getUsuarios = function (callback){
         this._connection.query('select u.*, a.titulo as area, c.titulo as cargo from usuUsuarios u inner join usuAreas a on u.idArea = a.idArea inner join usuCargos c on u.idCargo = c.idCargo where u.ativo = 1', callback)
     }
+    usuariosDAO.prototype.getUsuario = function (paran, callback){
+        this._connection.query('select u.*, a.titulo as area, c.titulo as cargo from usuUsuarios u inner join usuAreas a on u.idArea = a.idArea inner join usuCargos c on u.idCargo = c.idCargo where u.ativo = 1 and u.idUsuario = ' + paran.idPK, callback)
+    }
     usuariosDAO.prototype.salvarUsuario = function (usuario, callback){
+        usuario["cor"] = usuario["colorpicker"];
+        delete usuario["colorpicker"];
+        if (typeof usuario["idEstado"] == "string"){usuario["idEstado"] = null}
+        if (typeof usuario["idCidade"] == "string"){usuario["idCidade"] = null}
+        usuario.salario = parseFloat(usuario.salario||0).toFixed(2)
         this._connection.query("insert into usuusuarios set ? ", usuario, callback);
+    }
+    usuariosDAO.prototype.editarUsuario = function (usuario, callback){
+        idPK = usuario.idPK;
+        delete usuario["idPK"]; 
+        usuario["cor"] = usuario["colorpicker"];
+        delete usuario["colorpicker"]; 
+        if (typeof usuario["idEstado"] == "string"){usuario["idEstado"] = null}
+        if (typeof usuario["idCidade"] == "string"){usuario["idCidade"] = null}
+        usuario.salario = parseFloat(usuario.salario||0).toFixed(2)
+        this._connection.query("update usuusuarios set ? where ?", [usuario, { idUsuario: idPK }], callback); 
     }
     usuariosDAO.prototype.getCargosAreas = function (callback){
         this._connection.query('SELECT c.idCargo, c.idArea, c.titulo AS cargo, a.titulo AS area '+
                                'from usucargos c '+
                                'inner join usuareas a on a.idArea = c.idArea '+
                                'WHERE c.ativo = 1', callback)
+    }
+    usuariosDAO.prototype.excluirUsuario = function (paran, callback){ 
+        this._connection.query("update usuUsuarios set ? where ?", [{ativo: 0}, { idUsuario: paran.idPK }], callback);
     }
 
 //DAO Areas

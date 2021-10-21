@@ -5,7 +5,7 @@
     </div>
     <div class="fdt-pg-conteudo">
         <% global.validacao = true %>
-        <form id="fdt-form" method="post" action="salvar" data-parsley-validate="">
+        <form id="fdt-form" method="post" action="salvar" enctype="multipart/form-data">
             <div class="fdt-conteudo-titulo">
                 <h4>Dados principais</h4>
             </div>
@@ -22,7 +22,7 @@
                 <div class="col-sm-2">
                     <label for="colorpicker">Cor:</label>
                     <div class="input-group">
-                        <input type="text" name="colorpicker" id="colorpicker" value="" class="input-sm form-control colorpicker" >
+                        <input type="text" name="colorpicker" id="colorpicker" value="" class="input-sm form-control colorpicker" readonly >
                         <input type="hidden" name="cor" id="cor" value="" />
                     </div>
                 </div>
@@ -34,8 +34,8 @@
                     <label for="idArea">*Área:</label>
                     <select name="idArea" id="lstArea" required class="form-control selectpicker" data-live-search="true">
                         <option value=""></option>
-                        <% for(var i = 0; i < areas.length; i++){ %>
-                            <option value="<%= areas[i].idArea %>"><%= areas[i].titulo %></option>
+                        <% for(var i = 0; i < global.areas.length; i++){ %>
+                            <option value="<%= global.areas[i].idArea %>"><%= global.areas[i].titulo %></option>
                         <% } %>
                     </select>
                 </div>
@@ -43,8 +43,8 @@
                     <label for="idCargo">*Cargo:</label>
                     <select name="idCargo" id="lstCargo" required class="form-control selectpicker" data-live-search="true">
                         <option value="" data-i="0"></option>
-                        <% for(var i = 0; i < cargos.length; i++){ %>
-                            <option value="<%= cargos[i].idCargo %>" data-idArea="<%= cargos[i].idArea %>" data-i="<%= i + 1 %>"><%= cargos[i].cargo %></option>
+                        <% for(var i = 0; i < global.cargos.length; i++){ %>
+                            <option value="<%= global.cargos[i].idCargo %>" data-idArea="<%= global.cargos[i].idArea %>" data-i="<%= i + 1 %>"><%= global.cargos[i].titulo %></option>
                         <% } %>
                     </select>
                 </div>
@@ -186,20 +186,17 @@
                 </div>
                 <div class="form-group col-sm-2"> 
                     <label for="lstEstado">Estado:</label>
-                    <select name="estado" id="lstEstado" class="form-control selectpicker" data-live-search="true">
+                    <select name="idEstado" id="lstEstado" class="form-control selectpicker" data-live-search="true">
                         <option value=""></option>
                         <%for(i = 0; i < global.estados.length; i++){ %>
                             <option value="<%= global.estados[i].idEstado %>"><%= global.estados[i].descricao %></option>
                         <% } %>
                     </select>
                 </div>
-                <div class="form-group col-sm-4"> 
+                <div class="form-group col-sm-4" id="divCidade"> 
                     <label for="lstCidade">Cidade:</label>
-                    <select name="cidade" id="lstCidade" class="form-control selectpicker" data-live-search="true">
-                        <option value=""></option>
-                        <%for(i = 0; i < global.cidades.length; i++){ %>
-                            <option value="<%= global.cidades[i].idCidade %>"><%= global.cidades[i].descricao %></option>
-                        <% } %>
+                    <select name="idCidade" id="lstCidade" class="form-control selectpicker" data-live-search="true">
+                        <option value="">Selecione um estado ...</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-2"> 
@@ -281,7 +278,20 @@
 				$('#divCargo').find('[data-original-index="'+index+'"]').remove();
 			});
 		});
+        
+		$("#lstEstado").change(function () {
+			var valor = $("#lstEstado").val();
+            $("#lstCidade").empty().show();
+            $("#lstCidade").append("<option value=\"\">Aguarde...</option>");
+            $("#lstCidade").empty();
+            <%for(i = 0; i < global.cidades.length; i++){ %>
+                if (valor == <%= global.cidades[i].idEstado %>){
+                    $("#lstCidade").append('<option value="<%= global.cidades[i].idCidade %>"><%= global.cidades[i].descricao %></option>');
+                }
+            <% } %>
+		    $('.selectpicker').selectpicker('refresh');
+		});
 	});
-</script>
+</script>   
 <%- include('../../padrao/rodape.ejs') %>
 

@@ -4,22 +4,250 @@
         <h4><%= subTitulo %></h4>
     </div>
     <div class="fdt-pg-conteudo">
-        <% validacao = true %>
-        <form id="fdt-form" method="post" action="editar" data-parsley-validate="">
-            <input type="hidden" name="idPK" value="<%= cargo[0].idCargo %>">
+        <% global.validacao = true %>
+        <form id="fdt-form" method="post" action="editar" enctype="multipart/form-data">
+            <input type="hidden" name="idPK" value="<%= usuario[0].idUsuario %>">
+            <div class="fdt-conteudo-titulo">
+                <h4>Dados principais</h4>
+            </div>
+
             <div class="row">
-                <div class="form-group col-sm-3" >
+                <div class="form-group col-sm-4"> 
+                    <label for="nome">*Nome:</label> 
+                    <input type="text" name="nome" id="nome" value="<%= usuario[0].nome %>" maxlength="50" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-6"> 
+                    <label for="sobrenome">Sobrenome:</label> 
+                    <input type="text" name="sobrenome" id="sobrenome" value="<%= usuario[0].sobrenome %>" maxlength="50" class="form-control" />
+                </div>
+                <div class="col-sm-2">
+                    <label for="colorpicker">Cor:</label>
+                    <div class="input-group">
+                        <input type="text" name="colorpicker" id="colorpicker" value="<%= usuario[0].cor %>" class="input-sm form-control colorpicker" readonly >
+                        <input type="hidden" name="cor" id="cor" value="<%= usuario[0].cor %>" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6" >
                     <label for="idArea">*Área:</label>
-                    <select name="idArea" id="idArea" class="form-control selectpicker" required data-live-search="true">
+                    <select name="idArea" id="lstArea" required class="form-control selectpicker" data-live-search="true">
                         <option value=""></option>
-							<% for(var i = 0; i < areas.length; i++) { %> 
-                                <option value="<%= areas[i].idArea %>"<% if (cargo[0].idArea == areas[i].idArea){ %> selected<% } %>><%= areas[i].titulo %></option>
-                            <% } %>
+                        <% for(var i = 0; i < global.areas.length; i++){ %>
+                            <option value="<%= global.areas[i].idArea %>" <% if (global.areas[i].idArea == usuario[0].idArea){ %>selected<%}%>><%= global.areas[i].titulo %></option>
+                        <% } %>
                     </select>
                 </div>
-                <div class="form-group col-sm-9"> 
-                    <label for="titulo">*Título:</label>
-                    <input type="text" name="titulo" id="titulo" value="<%= cargo[0].titulo %>" required class="form-control" />
+                <div class="form-group col-sm-6" id="divCargo" >
+                    <label for="idCargo">*Cargo:</label>
+                    <select name="idCargo" id="lstCargo" required class="form-control selectpicker" data-live-search="true">
+                        <option value="" data-i="0"></option>
+                        <% for(var i = 0; i < global.cargos.length; i++){ %>
+                            <option value="<%= global.cargos[i].idCargo %>"<% if (global.cargos[i].idCargo == usuario[0].idCargo){ %>selected<%}%> data-idArea="<%= global.cargos[i].idArea %>" data-i="<%= i + 1 %>"><%= global.cargos[i].titulo %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="fdt-conteudo-titulo">
+                <h4>Acesso ao sistema</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2"> 
+                    <label for="login">*Login:</label> 
+                    <input type="text" name="login" id="login" value="<%= usuario[0].login %>" maxlength="25" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="senha">*Senha:</label> 
+                    <input type="password" name="senha" id="senha" value="<%= usuario[0].senha %>" maxlength="25" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="dashboardInicial">Dashboard inicial:</label>
+                    <select name="dashboardInicial" id="dashboardInicial" class="form-control selectpicker">
+                        <option value="">Nenhum</option>
+                        <% if(permissoes.varModFab && global.varDashboardGeral){ %><option value="fab" <% if(usuario[0].dashboardInicial == "fab"){%>selected<%}%>><%= varClientApp %></option><% } %>
+                        <% if(permissoes.varModFin){ %><option value="fin" <% if(usuario[0].dashboardInicial == "fin"){%>selected<%}%>>Financeiro</option><% } %>
+                        <% if(permissoes.varModCli){ %><option value="cli" <% if(usuario[0].dashboardInicial == "cli"){%>selected<%}%>>Clientes</option><% } %>
+                        <% if(permissoes.varModTar){ %><option value="ven" <% if(usuario[0].dashboardInicial == "ven"){%>selected<%}%>>Tarefas</option><% } %>
+                        <% if(permissoes.varModTic){ %><option value="tic" <% if(usuario[0].dashboardInicial == "tic"){%>selected<%}%>>Tickets</option><% } %>
+                        <% if(permissoes.varModFlw){ %><option value="flw" <% if(usuario[0].dashboardInicial == "flw"){%>selected<%}%>>Follow-up</option><% } %>
+                        <% if(permissoes.varModOpo){ %><option value="opo" <% if(usuario[0].dashboardInicial == "opo"){%>selected<%}%>>Oportunidades</option><% } %>
+                        <% if(permissoes.varModVen){ %><option value="ven" <% if(usuario[0].dashboardInicial == "ven"){%>selected<%}%>>Vendas de produtos</option><% } %>
+                        <% if(permissoes.varModVes){ %><option value="ves" <% if(usuario[0].dashboardInicial == "ves"){%>selected<%}%>>Vendas de serviços</option><% } %>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Foto</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="<%= campo %>"><i class="icon fa fa-image"></i> Foto:</label>
+                    <input id="input-b1" name="<%= campo %>" id="<%= campo %>" type="file" class="file" data-show-upload="false" data-show-caption="false" data-browse-on-zone-click="true" data-msg-placeholder="Select {files} for upload..."  data-allowed-file-extensions='["png", "gif", "jpg", "jpeg"]'>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Demais informações pessoais</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2" >
+                    <label for="diaNascimento">Dia de nascimento:</label>
+                    <select name="diaNascimento" id="diaNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = 1; x < 31; x++){ %>
+                            <option value="<%= x %>"<% if(usuario[0].diaNascimento == x){ %>selected<%}%>><%= x %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="mesNascimento">Mês de nascimento:</label>
+                    <select name="mesNascimento" id="mesNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = 1; x <= 12; x++){ %>
+                            <option value="<%= x %>"<% if(usuario[0].mesNascimento == x){ %>selected<%}%>><%= global.month[x-1] %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" >
+                    <label for="anoNascimento">Ano de nascimento:</label>
+                    <select name="anoNascimento" id="anoNascimento" class="form-control selectpicker" required data-live-search="true">
+                        <option value="0"></option>
+                        <% for (x = new Date().getFullYear(); x >= 1900; x--){ %>
+                            <option value="<%= x %>"<% if(usuario[0].anoNascimento == x){ %>selected<%}%>><%= x %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="estadoCivil">Estado civil:</label>
+                    <select name="estadoCivil" id="estadoCivil" class="form-control selectpicker">
+                        <option value=""></option>
+                        <option value="Solteiro"<% if(usuario[0].estadoCivil == "Solteiro"){ %>selected<%}%>>Solteiro</option>
+                        <option value="Casado"<% if(usuario[0].estadoCivil == "Casado"){ %>selected<%}%>>Casado</option>
+                        <option value="Divorciado"<% if(usuario[0].estadoCivil == "Divorciado"){ %>selected<%}%>>Divorciado</option>
+                        <option value="Viúvo"<% if(usuario[0].estadoCivil == "Viúvo"){ %>selected<%}%>>Viúvo</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="formacaoAcademica">Formação acadêmica:</label> 
+                    <input type="text" name="formacaoAcademica" id="formacaoAcademica" value="<%= usuario[0].formacaoAcademica %>" maxlength="50" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Informações de contato</h4>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6"> 
+                    <label for="email">*E-mail:</label> 
+                    <input type="email" name="email" id="email" value="<%= usuario[0].email %>" maxlength="75" required class="form-control" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="telCelular">Tel. Celular:</label> 
+                    <input type="text" name="telCelular" id="telCelular" value="<%= usuario[0].telCelular %>" maxlength="20" class="form-control fdt-mask-celular" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="telFixo">Tel. Fixo:</label> 
+                    <input type="text" name="telFixo" id="telFixo" value="<%= usuario[0].telFixo %>" maxlength="20" class="form-control fdt-mask-telefone" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+               
+            <div class="row">
+               <div class="form-group col-sm-6"> 
+                    <label for="endereco">Endereço:</label> 
+                    <input type="text" name="endereco" id="endereco" value="<%= usuario[0].endereco %>" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="numero">Número:</label> 
+                    <input type="text" name="numero" id="numero" value="<%= usuario[0].numero %>" maxlength="15" class="form-control" />
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="complemento">Complemento:</label> 
+                    <input type="text" name="complemento" id="complemento" value="<%= usuario[0].complemento %>" maxlength="25" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+             </div>
+                 
+             <div class="row">
+                 <div class="form-group col-sm-2"> 
+                    <label for="bairro">Bairro:</label> 
+                    <input type="text" name="bairro" id="bairro" value="<%= usuario[0].bairro %>" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="cep">CEP:</label> 
+                    <input type="text" name="cep" id="cep" value="<%= usuario[0].cep %>" maxlength="9" class="form-control fdt-mask-cep" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="lstEstado">Estado:</label>
+                    <select name="idEstado" id="lstEstado" class="form-control selectpicker" data-live-search="true">
+                        <option value=""></option>
+                        <%for(i = 0; i < global.estados.length; i++){ %>
+                            <option value="<%= global.estados[i].idEstado %>"<% if(usuario[0].idEstado == global.estados[i].idEstado){ %>selected<%}%>><%= global.estados[i].descricao %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4" id="divCidade"> 
+                    <label for="lstCidade">Cidade:</label>
+                    <select name="idCidade" id="lstCidade" class="form-control selectpicker" data-live-search="true">
+                        <option value="">Selecione um estado ...</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="regiao">Região:</label>
+                    <select name="regiao" id="regiao" class="form-control selectpicker">
+                        <option value=""></option>
+                        <option value="Norte"<% if(usuario[0].regiao == "Norte"){ %>selected<%}%>>Norte</option>
+                        <option value="Sul"<% if(usuario[0].regiao == "Sul"){ %>selected<%}%>>Sul</option>
+                        <option value="Leste"<% if(usuario[0].regiao == "Leste"){ %>selected<%}%>>Leste</option>
+                        <option value="Oeste"<% if(usuario[0].regiao == "Oeste"){ %>selected<%}%>>Oeste</option>
+                        <option value="Centro"<% if(usuario[0].regiao == "Centro"){ %>selected<%}%>>Centro</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Informações financeiras</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-2"> 
+                    <label for="salario">Salário:</label> 
+                    <input type="text" name="salario" id="salario" value="<%= parseFloat(usuario[0].salario).toFixed(2) %>" maxlength="14" class="form-control fdt-mask-decimal" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="cpf">CPF:</label> 
+                    <input type="text" name="cpf" id="cpf" value="<%= usuario[0].cpf %>" maxlength="14" class="form-control fdt-mask-cpf" />
+                </div>
+                <div class="form-group col-sm-3"> 
+                    <label for="banco">Banco:</label> 
+                    <input type="text" name="banco" id="banco" value="<%= usuario[0].banco %>" maxlength="50" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="agencia">Agência:</label> 
+                    <input type="text" name="agencia" id="agencia" value="<%= usuario[0].agencia %>" maxlength="10" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2"> 
+                    <label for="conta">Conta:</label> 
+                    <input type="text" name="conta" id="conta" value="<%= usuario[0].conta %>" maxlength="20" class="form-control" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="fdt-conteudo-titulo">
+                <h4>Outras informações</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12"> 
+                    <label for="observacoes">Observações:</label> 
+                    <textarea name="observacoes" id="observacoes" cols="50" rows="3" class="form-control" maxlength="4000"><%= usuario[0].observacoes %></textarea>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -34,6 +262,43 @@
         </form>
     </div>
 </body>
-</html>
+</html> 
+<script>
+	$(document).ready(function () {
+        $(".file-drop-zone-title").html("Arraste e solte o arquivo aqui...<br>(ou clique para selecionar um arquivo");
+		$("#lstArea").change(function () {
+			var valor = $("#lstArea").val();
+			$("#lstCargo").find("[data-idArea='"+valor+"']").each(function() {
+				$(this).show();
+				$('.selectpicker').selectpicker('refresh');
+			});
+			$("#lstCargo").find(":not([data-idArea='"+valor+"'])").each(function() {
+				$(this).hide();
+				var index = $(this).data("i");
+				$('.selectpicker').selectpicker('refresh');
+				$('#divCargo').find('[data-original-index="'+index+'"]').remove();
+			});
+		});
+        
+		$("#lstEstado").change(function () {
+			var valor = $("#lstEstado").val();
+            $("#lstCidade").empty().show();
+            $("#lstCidade").append("<option value=\"\">Aguarde...</option>");
+            $("#lstCidade").empty();
+            <%for(i = 0; i < global.cidades.length; i++){ %>
+                selected = "";
+                if (valor == <%= global.cidades[i].idEstado %>){
+                    <% if(usuario[0].idCidade == global.cidades[i].idCidade){
+                        var selected = "selected"
+                    }else{
+                        selected = "";
+                    }%>
+                    $("#lstCidade").append('<option value="<%= global.cidades[i].idCidade %>"<%= selected %>><%= global.cidades[i].descricao %></option>');
+                }
+            <% } %>
+		    $('.selectpicker').selectpicker('refresh');
+		}).change();
+	});
+</script>   
 <%- include('../../padrao/rodape.ejs') %>
 

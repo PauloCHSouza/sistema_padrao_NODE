@@ -14,12 +14,14 @@
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-session": "^1.17.2",
     "express-validator": "3.2.0",
     "mssql": "^7.2.1",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "formidable": "^1.2.2",
     "nodemo": "^1.0.0"
   }
 }

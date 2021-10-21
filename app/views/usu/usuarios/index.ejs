@@ -25,11 +25,11 @@
 										<td width="30" class="fdt-acao">
 											<div class="fdt-acoes-mostra"><a class="fdt-acoes" data-toggle="tooltip" data-placement="top" title="Ações"><i class="fal fa-bars"></i></a>
 												<div class="fdt-acoes-hide" style="width: <%= iconeCalc %>px;">
-													<% if(permissoes.permUsuAdmin){ %><a href="formulario.asp?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fal fa-pen-alt fa-verde"></i></a> <% } %>
+													<% if(permissoes.permUsuAdmin){ %><a href="formularioEditar?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fal fa-pen-alt fa-verde"></i></a> <% } %>
 													<% if(global.varPermissoes && permissoes.permUsuPerm){ %><a href="permissoes?idUS=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Permissões"><i class="fal fa-key fa-roxo"></i></a> <% } %>
 													<a href="historico?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Histórico"><i class="fal fa-history fa-turquesa"></i></a>
 													<a href="enviarDadosScript?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon" data-toggle="tooltip" data-placement="top" title="Enviar e-mail de bem-vindo"><i class="fal fa-envelope fa-laranja"></i></a>
-													<% if(permissoes.permUsuAdmin){ %><a href="excluirScript.asp?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon confirmaOperacao" data-mensagemConfirmacao="Deseja excluir este registro?" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fal fa-times fa-vermelho"></i></a> <% } %>
+													<% if(permissoes.permUsuAdmin){ %><a href="excluir?idPK=<%= usuarios[i].idUsuario %>" class="fdt-icon confirmaOperacao" data-mensagemConfirmacao="Deseja excluir este registro?" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fal fa-times fa-vermelho"></i></a> <% } %>
 												</div>
 											</div>
 										</td>

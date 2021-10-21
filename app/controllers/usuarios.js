@@ -17,7 +17,7 @@
             icons += 2;
         }
 
-        usuariosModel.getUsuario(function(error, result){
+        usuariosModel.getUsuarios(function(error, result){
             res.render("usu/usuarios/index", {
                 tituloPagina: "Usuários",
                 tituloIcone: "user",
@@ -38,23 +38,128 @@
         if (!req.session.cookie.permModUsu){
             res.redirect("/");
         }
-        usuariosModel.getAreas(function(areasError, areasResult) {
-            usuariosModel.getCargosAreas(function(cargosError, cargosResult) {
-                res.render("usu/usuarios/formulario", {
-                    tituloPagina: "Usuários",
-                    subTitulo: "Incluindo usuário",
-                    tituloIcone: "user",
-                    calendarjsPDF: false,
-                    varModulo: "usu",
-                    campo: "foto",
-                    pasta: "usu",
-                    subPasta: "fotos",
-                    preview: "",
-                    permissoes: req.session.cookie,
-                    areas: areasResult,
-                    cargos: cargosResult
-                });
+
+        res.render("usu/usuarios/formulario", {
+            tituloPagina: "Usuários",
+            subTitulo: "Incluindo usuário",
+            tituloIcone: "user",
+            calendarjsPDF: false,
+            varModulo: "usu",
+            campo: "foto",
+            pasta: "usu",
+            subPasta: "fotos",
+            preview: "",
+            permissoes: req.session.cookie
+        });
+    }
+    module.exports.index.usuario_salvarScript = function(application, req, res){
+        var usuario = req.body;
+
+        req.assert("nome", "Nome é obrigatório").notEmpty();
+        req.assert("idArea", "Área é obrigatório").notEmpty();
+        req.assert("idCargo", "Cargo é obrigatório").notEmpty();
+        req.assert("login", "Login é obrigatório").notEmpty();
+        req.assert("senha", "Senha é obrigatório").notEmpty();
+        req.assert("email", "E-mail é obrigatório").notEmpty();
+
+        var erros = req.validationErrors();
+        if(erros){
+            res.render("formulario", {validacao: erros, usuario: usuario});
+            return;
+        }
+
+        if (!(req.files === null)){
+            const file = req.files.foto;
+            const path = "./uploads/" + file.name;
+            usuario['foto'] = file.name
+            
+            file.mv(path, (err) => {
+                if (err) {
+                erros["file"] = "Erro no upload do arquivo";
+                }
+                path: path
             });
+        }
+
+        var connection = application.config.dbConnection();
+        var usuariosModel = new application.app.models.usuariosDAO(connection);
+
+        usuariosModel.salvarUsuario(usuario, function (error, result) {
+            console.log(error);
+            res.redirect("/usu/usuarios/index");
+        });
+    }
+    module.exports.index.usuario_editar = function(application, req, res){
+
+        var connection = application.config.dbConnection();
+        var usuariosModel = new application.app.models.usuariosDAO(connection);
+        
+        if (!req.session.cookie.permModUsu){
+            res.redirect("/");
+        }
+
+        var paran = req.query
+        usuariosModel.getUsuario(paran, function(error, result){
+            res.render("usu/usuarios/formularioEditar", {
+                tituloPagina: "Usuários",
+                subTitulo: "Incluindo usuário",
+                tituloIcone: "user",
+                calendarjsPDF: false,
+                varModulo: "usu",
+                campo: "foto",
+                pasta: "usu",
+                subPasta: "fotos",
+                preview: "",
+                permissoes: req.session.cookie,
+                usuario: result
+            });
+        });
+    }
+    module.exports.index.usuario_editarScript = function(application, req, res){
+        var usuario = req.body;
+
+        req.assert("nome", "Nome é obrigatório").notEmpty();
+        req.assert("idArea", "Área é obrigatório").notEmpty();
+        req.assert("idCargo", "Cargo é obrigatório").notEmpty();
+        req.assert("login", "Login é obrigatório").notEmpty();
+        req.assert("senha", "Senha é obrigatório").notEmpty();
+        req.assert("email", "E-mail é obrigatório").notEmpty();
+
+        var erros = req.validationErrors();
+        if(erros){
+            res.render("formulario", {validacao: erros, usuario: usuario});
+            return;
+        }
+
+        if (!(req.files === null)){
+            console.log("Nova foto")
+            const file = req.files.foto;
+            const path = "./uploads/" + file.name;
+            usuario['foto'] = file.name
+            
+            file.mv(path, (err) => {
+                if (err) {
+                erros["file"] = "Erro no upload do arquivo";
+                }
+                path: path
+            });
+        }
+
+        var connection = application.config.dbConnection();
+        var usuariosModel = new application.app.models.usuariosDAO(connection);
+
+        usuariosModel.editarUsuario(usuario, function (error, result) {
+            res.redirect("/usu/usuarios/index");
+        });
+    }
+    module.exports.index.usuario_excluirScript = function(application, req, res){
+        var paran = req.query;
+
+        var connection = application.config.dbConnection();
+        var usuariosModel = new application.app.models.usuariosDAO(connection);
+
+        usuariosModel.excluirUsuario(paran, function (error, result) {
+            res.redirect("/usu/usuarios/index");
         });
     }
 

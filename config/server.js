@@ -3,6 +3,8 @@ var consign = require("consign");
 var bodyParser = require("body-parser");
 var expressValidator = require("express-validator");
 const session = require('express-session');
+const fileUpload = require("express-fileupload");
+const path = require("path");
 
 global.appLoggedFDTASP = false;
 global.usuario = "Paulo";
@@ -29,6 +31,7 @@ app.set("views", "./app/views")
 app.use(express.static("./app/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
+app.use(fileUpload());
 
 app.use(session({
     secret: 'keyboard cat', 
